@@ -15,9 +15,6 @@ echo
 echo "Wayland:"
 ls -l /run/user/*/wayland-* 2>/dev/null
 echo
-echo "AIO controller:"
-command -v aiov2_ctl || true
-aiov2_ctl --help 2>/dev/null | head -40
 echo
 echo "Network:"
 ip -br link

@@ -200,10 +200,7 @@ if [[ -n "${GUI_USER:-}" ]]; then
 fi
 
 log "Checking optional HackerGadgets integration"
-if command -v aiov2_ctl >/dev/null 2>&1; then
-  ok "aiov2_ctl detected: $(command -v aiov2_ctl)"
 else
-  warn "aiov2_ctl not detected. Dashboard works, but AIO radio controls will be unavailable."
 fi
 
 log "GPS setup"
@@ -213,7 +210,6 @@ if [[ -n "$EXISTING_GPSD" ]]; then
   ok "gpsd already configured: $EXISTING_GPSD"
 else
   GPS_DEV=""
-  # On CM5/AIO V2 ttyAMA0 is common. Only configure after observing NMEA.
   for dev in /dev/ttyAMA0 /dev/ttyAMA1 /dev/ttyAMA10 /dev/ttyUSB0 /dev/ttyACM0; do
     [[ -c "$dev" ]] || continue
     SAMPLE="$(timeout 2 sh -c "stty -F '$dev' 9600 raw -echo 2>/dev/null; head -n 12 < '$dev'" 2>/dev/null || true)"
@@ -237,7 +233,6 @@ EOF
     ok "Configured gpsd for detected NMEA device: $GPS_DEV"
   else
     warn "No live NMEA serial stream detected. gpsd installed but existing configuration was left alone."
-    warn "If using HackerGadgets AIO V2, enable GPS and configure its UART later."
   fi
 fi
 

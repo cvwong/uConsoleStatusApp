@@ -1134,7 +1134,6 @@ def gps_data():
     return result
 
 def aio_available():
-    return bool(shutil.which("aiov2_ctl"))
 
 def parse_aio_states():
     states = {"GPS": None, "SDR": None, "LORA": None, "USB": None}

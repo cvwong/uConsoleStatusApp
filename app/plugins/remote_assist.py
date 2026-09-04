@@ -173,7 +173,6 @@ class DiagnosticsBundle:
         with open(output, 'w') as f:
             f.write("=== AIO Controller Status ===\n")
             try:
-                result = subprocess.run(['aiov2_ctl', '--status'], capture_output=True, text=True)
                 f.write(result.stdout if result.stdout else "aiov2_ctl failed\n")
             except Exception as e:
                 f.write(f"aiov2_ctl failed: {e}\n")
@@ -181,7 +180,6 @@ class DiagnosticsBundle:
             f.write("\n=== AIO Power States ===\n")
             for device in ['GPS', 'SDR', 'LORA', 'USB']:
                 try:
-                    result = subprocess.run(['aiov2_ctl', '--get', device.lower()], 
                                           capture_output=True, text=True)
                     state = result.stdout.strip() if result.stdout else "unknown"
                     f.write(f"{device}: {state}\n")
